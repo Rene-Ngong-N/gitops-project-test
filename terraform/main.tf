@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "terraform-backend-hard-work-374007"
+    bucket = "outbestinc-bucket"
   }
 }
 
