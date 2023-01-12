@@ -17,7 +17,8 @@ provider "google" {
 }
 
 resource "google_service_account" "default" {
-  account_id   = "${var.name}-sa"
+  # account_id   = "${var.name}-sa"
+  account_id   = "bensrene19@gmail.com"
   display_name = "${var.name}-sa"
 }
 
