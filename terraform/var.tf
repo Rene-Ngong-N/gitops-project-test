@@ -1,14 +1,13 @@
 variable "name" {
     description = "name to used"
     type = string
-    default = "gitopss"
+    default = "gitops"
   
 }
 
 variable "project_id" {
     description = "project id"
     type = string
-    default = "outbestinc"
   
 }
 

@@ -16,15 +16,11 @@ provider "google" {
   region = var.region
 }
 
-# resource "google_service_account" "default" {
-#   # account_id   = "${var.name}-sa"
-#   account_id   = "bensrene19@gmail.com"
-#   display_name = "${var.name}-sa"
-# }
 resource "google_service_account" "default" {
-  account_id   = "service-account-id"
-  display_name = "Service Account"
+  account_id   = "${var.name}-sa"
+  display_name = "${var.name}-sa"
 }
+
 resource "google_container_cluster" "main" {
   name     = "${var.name}-cluster"
   location           = var.location
