@@ -32,12 +32,12 @@ variable "machine-type" {
   
 }
 
-variable "cluster-count" {
-    description = " different cluster"
-    type = map
-    default = {
-        cluster1 = gitops_1
-        cluster2 = gitops_2
-    }
+# variable "cluster-count" {
+#     description = " different cluster"
+#     type = map
+#     default = {
+#         cluster1 = gitops_1
+#         cluster2 = gitops_2
+#     }
   
-}
+# }
