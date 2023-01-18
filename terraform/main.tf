@@ -40,7 +40,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   node_count = 2
 
   node_config {
-    preemptible  = true
+    preemptible  = false
     machine_type = var.machine-type
 
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
