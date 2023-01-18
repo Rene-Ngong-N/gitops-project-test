@@ -35,7 +35,7 @@ variable "machine-type" {
 variable "cluster-count" {
     description = " different cluster"
     #type = map
-    type = set(string)
+    type = map(string)
     default = {
         "cluster1" = "gitops-1"
         "cluster2" = "gitops-2"
