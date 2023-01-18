@@ -36,8 +36,8 @@ variable "cluster-count" {
     description = " different cluster"
     type = map
     default = {
-        "cluster1" = "gitops_1"
-        "cluster2" = "gitops_2"
+        "cluster1" = "gitops-1"
+        "cluster2" = "gitops-2"
     }
   
 }
