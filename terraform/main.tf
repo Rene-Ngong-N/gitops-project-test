@@ -37,7 +37,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "${var.name}-node-pool"
   location   = var.location
   count      = 2
-  cluster    = google_container_cluster.main.name
+  cluster    = google_container_cluster.main[count.index].name
   node_count = 2
 
   node_config {
