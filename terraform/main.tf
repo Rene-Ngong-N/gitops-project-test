@@ -37,16 +37,16 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "${each.value}-node-pool"
   location   = var.location
   cluster    = google_container_cluster.main[each.key].name
-  # cluster    = google_container_cluster.main[each.value].name
+  #cluster    = google_container_cluster.main[each.value].name
   node_count = 2
 
   node_config {
-    preemptible  = false
+    preemptible  = true
     machine_type = var.machine-type
 
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     service_account = google_service_account.default.email
-    # service_account = google_service_account.default[each.value].email
+    #service_account = google_service_account.default[each.value].email
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
