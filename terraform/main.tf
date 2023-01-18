@@ -25,6 +25,7 @@ resource "google_container_cluster" "main" {
   # for_each           =  var.cluster-count
   name               = "${var.name}-cluster"
   location           = var.location
+  count = 2
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
@@ -36,6 +37,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   # for_each   =  var.cluster-count
   name       = "${var.name}-node-pool"
   location   = var.location
+  count = 2
   cluster    = google_container_cluster.main[count.index].name
   node_count = 2
 
