@@ -16,7 +16,7 @@ jobs:
       run: wget -O terraform.zip https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_linux_amd64.zip && unzip terraform.zip && chmod +x terraform && sudo mv terraform /usr/local/bin
     - name: Apply Terraform
       id: apply-terraform
-      run: sed -i "s/<var.project_id>/${{ secrets.PROJECT_ID }}/g" main.tf && terraform init && terraform destroy -auto-approve -var="project_id=${{ secrets.PROJECT_ID  }}"
+      run: sed -i "s/<var.project_id>/${{ secrets.PROJECT_ID }}/g" main.tf && terraform init && terraform apply -auto-approve -var="project_id=${{ secrets.PROJECT_ID  }}"
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
@@ -30,13 +30,18 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
     - run: |-
-        set -f
-        set -- $(gcloud container clusters list | grep -v 'NAME' | awk '{print $1}')
-        export GKE_CLUSTER=("$@")
-        set -- $(gcloud container clusters list | grep -v 'NAME' | awk '{print $2}')
-        export GKE_ZONE=("$@")
-        gcloud components install gke-gcloud-auth-plugin
-        gcloud components update kubectl
-        gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+       #!/bin/bash
+       
+       clusters=($(gcloud container clusters list --format='value(name)'))
+       zones=($(gcloud container clusters list --format='value(zone)'))
+       for i in "${!clusters[@]}"; do
+         export GKE_CLUSTER="${clusters[i]}"
+         export GKE_ZONE="${zones[i]}"
+ 
+         gcloud components install gke-gcloud-auth-plugin
+         gcloud components update kubectl
+         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+       done
+
     - name: Install Argo CD
       run: bash  ../scripts/install-argocd.sh

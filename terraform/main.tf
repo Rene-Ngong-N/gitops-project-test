@@ -17,7 +17,7 @@ provider "google" {
 }
 
 resource "google_service_account" "default" {
-  for_each           =  var.cluster-count
+  for_each     =  var.cluster-count
   account_id   = "${each.value}-sa"
   display_name = "${each.value}-sa"
 }
