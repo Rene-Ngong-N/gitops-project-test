@@ -1,7 +1,7 @@
 variable "name" {
     description = "name to used"
-    type = string
-    default = "gitops"
+    type = set(string)
+    default = (["gitops-1", "gitops-2" ])
   
 }
 
@@ -29,13 +29,5 @@ variable "machine-type" {
     description = "machine type to use"
     type = string
     default = "e2-medium"
-  
-}
-
-variable "cluster-count" {
-    description = " different cluster"
-    #type = map
-    type = set(string)
-    default = (["gitops-1", "gitops-2" ])
   
 }

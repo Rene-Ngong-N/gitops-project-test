@@ -17,13 +17,13 @@ provider "google" {
 }
 
 resource "google_service_account" "default" {
-  for_each     =  var.cluster-count
+  for_each     =  var.name
   account_id   = "${each.value}-sa"
   display_name = "${each.value}-sa"
 }
 
 resource "google_container_cluster" "main" {
-  for_each           =  var.cluster-count
+  for_each           =  var.name
   name               = "${each.value}-cluster"
   location           = var.location
   # We can't create a cluster with no node pool defined, but we want to only use
@@ -34,7 +34,7 @@ resource "google_container_cluster" "main" {
 }
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
-  for_each   =  var.cluster-count
+  for_each   =  var.name
   name       = "${each.value}-node-pool"
   location   = var.location
   #cluster    = google_container_cluster.main[each.key].name
@@ -42,7 +42,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   node_count = 2
 
   node_config {
-    # preemptible  = true
+    preemptible  = true
     machine_type = var.machine-type
 
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
@@ -54,3 +54,4 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     ]
   }
 }
+
